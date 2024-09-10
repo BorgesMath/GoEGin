@@ -1,11 +1,13 @@
 package main
 
 import (
+	"github.com/BorgesMath/GoEGin/database"
 	"github.com/BorgesMath/GoEGin/models"
 	"github.com/BorgesMath/GoEGin/routes"
 )
 
 func main() {
+	database.ConectaComBancoDeDados()
 
 	models.Metas = []models.Meta{
 		{
