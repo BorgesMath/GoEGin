@@ -15,6 +15,8 @@ func HandleRequests() {
 	r.POST("/passos", ct.CriaNovoPasso)
 	r.DELETE("/metas/:id", ct.DeletaMeta)
 	r.DELETE("/metas/:idMeta/passos/:idPasso", ct.DeletaPasso)
+	r.PATCH("/metas/:id", ct.EditaMeta)
+	r.PATCH("/passos/:id", ct.EditaPasso)
 	r.Run(":5000")
 	// Subir o servidor,
 

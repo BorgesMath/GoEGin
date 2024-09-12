@@ -89,7 +89,8 @@ func DeletaMeta(c *gin.Context) {
 }
 
 func DeletaPasso(c *gin.Context) {
-
+	// Acho que minha logica foi errada, não preciso do idMeta
+	// deixar pra se precisar futuramente
 	var passo models.Passo
 	idMeta := c.Param("idMeta")
 	idPasso := c.Param("idPasso")
@@ -102,4 +103,36 @@ func DeletaPasso(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "Passo deletado com sucesso!",
 	})
+}
+
+func EditaMeta(c *gin.Context) {
+	var meta models.Meta
+	id := c.Params.ByName("id")
+
+	database.DB.First(&meta, id)
+
+	if err := c.ShouldBindBodyWithJSON(&meta); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	database.DB.Model(&meta).UpdateColumns(meta)
+	c.JSON(http.StatusOK, meta)
+}
+
+func EditaPasso(c *gin.Context) {
+
+	var passo models.Passo
+	id := c.Params.ByName("id")
+
+	database.DB.First(&passo, id)
+
+	if err := c.ShouldBindBodyWithJSON(&passo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	database.DB.Model(&passo).UpdateColumns(passo)
+	c.JSON(http.StatusOK, passo)
+
 }

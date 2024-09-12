@@ -8,5 +8,5 @@ type Meta struct {
 	Check  bool    `json:"Check"`
 	Tempo  int64   `json:"Tempo"`
 	Passos []Passo `json:"Passo" gorm:"foreignKey:MetaID;constraint:OnDelete:CASCADE;"`
-	// Definir o campo de chave estrangeira MetaID
+	// Definir o campo de chave estrangeira MetaID, e fala que quando deletar meta deletar os passos
 }
