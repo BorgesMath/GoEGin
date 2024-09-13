@@ -36,6 +36,11 @@ func CriaNovaMeta(c *gin.Context) {
 		return
 	}
 
+	if err := models.ValidaDadosMetas(&meta); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
 	database.DB.Create(&meta)
 	c.JSON(http.StatusCreated, meta) // Melhor que StatusOK?
 
@@ -50,11 +55,18 @@ func CriaNovoPasso(c *gin.Context) {
 		return
 	}
 
+	// APAGAR ESSA PARTE E FAZER PELO VALIDATOR!!!
 	// Verifica se o MetaID foi passado
 	if passo.MetaID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "MetaID é obrigatório para criar um Passo",
 		})
+		return
+	}
+
+	if err := models.ValidaDadosPassos(&passo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
 		return
 	}
 
