@@ -23,7 +23,7 @@ func ExibeTodasMetas(c *gin.Context) {
 
 func Inicio(c *gin.Context) {
 	nome := c.Params.ByName("nome")
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"API": "Eai " + nome + " Bom dia",
 	})
 }
@@ -123,7 +123,7 @@ func EditaMeta(c *gin.Context) {
 
 	database.DB.First(&meta, id)
 
-	if err := c.ShouldBindBodyWithJSON(&meta); err != nil {
+	if err := c.ShouldBindJSON(&meta); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -139,7 +139,7 @@ func EditaPasso(c *gin.Context) {
 
 	database.DB.First(&passo, id)
 
-	if err := c.ShouldBindBodyWithJSON(&passo); err != nil {
+	if err := c.ShouldBindJSON(&passo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
