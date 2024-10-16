@@ -5,7 +5,10 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
+
+	"encoding/json"
 
 	ct "github.com/BorgesMath/GoEGin/controllers"
 	"github.com/BorgesMath/GoEGin/database"
@@ -93,6 +96,28 @@ func TestBuscaMetaPorID(t *testing.T) {
 	req, _ := http.NewRequest("GET", caminho, nil)
 	resp := httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
+
+	var metaMock models.Meta
+	json.Unmarshal(resp.Body.Bytes(), &metaMock)
+	fmt.Println(metaMock.Nome)
+
+	assert.Equal(t, "Meta Exemplo", metaMock.Nome)
+
+}
+
+func DeletaMetaHandler(t *testing.T) {
+	database.ConectaComBancoDeDados()
+	CriaMetaMock()
+	r := SetUpDasRotasDeTeste()
+	r.DELETE("/metas/:id", ct.DeletaMeta)
+
+	pathBusca := "/metas/" + strconv.Itoa(ID)
+
+	req, _ := http.NewRequest("DELETE", pathBusca, nil)
+	resp := httptest.NewRecorder()
+
+	r.ServeHTTP(resp, req)
+
 	assert.Equal(t, http.StatusOK, resp.Code)
 
 }
