@@ -11,7 +11,8 @@ type Passo struct {
 	Check     bool   `json:"CheckPasso" validate:"required"`
 	Tempo     int64  `json:"TempoPasso"`
 	Descricao string `json:"DescricaoPasso"`
-	MetaID    uint   `json:"MetaID"` // Campo de chave estrangeira para associar com Meta
+	MetaID    uint   `json:"MetaID"`  // Campo de chave estrangeira para associar com Meta
+	Ciclico   bool   `json:"Ciclico"` // Novo campo
 }
 
 func ValidaDadosPassos(passo *Passo) error {

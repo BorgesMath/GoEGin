@@ -7,10 +7,11 @@ import (
 
 type Meta struct {
 	gorm.Model
-	Nome   string  `json:"nome" validate:"nonzero"`
-	Check  bool    `json:"Check" validate:"required"`
-	Tempo  int64   `json:"Tempo"`
-	Passos []Passo `json:"Passo" gorm:"foreignKey:MetaID;constraint:OnDelete:CASCADE;"`
+	Nome    string  `json:"nome" validate:"nonzero"`
+	Check   bool    `json:"Check" validate:"required"`
+	Tempo   int64   `json:"Tempo"`
+	Passos  []Passo `json:"Passo" gorm:"foreignKey:MetaID;constraint:OnDelete:CASCADE;"`
+	Ciclico bool    `json:"Ciclico"` // Novo campo
 	// Definir o campo de chave estrangeira MetaID, e fala que quando deletar meta deletar os passos
 }
 
